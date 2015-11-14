@@ -8,9 +8,9 @@
 
 \maketitle
 
-The problem of text prediction is a popular area of study within the machine learning community.  The canonical problem is one where the predictor observes a sequence of words and wants to predict the next word in the sequence.  More formally, this problem can be understood as a language modeling problem where we want to form some probability distribution for a word $w_t$ in period $t$ based on the observed corpus of words for the previous periods $W_{t-1}$.
+The problem of text prediction is a popular area of study within the machine learning community.  The canonical problem is one where a agent interesting in prediction observes a sequence of words and wants to predict the next word in the sequence.  More formally, this problem can be understood as a language modeling problem where we want to form some probability distribution for a word $w_t$ in period $t$ based on the observed corpus of words for the previous periods $W_{t-1}$.
 
-One method that seems immediately appropriate for the task of text prediction is recurrent networks.  The general formulation of a recurrent neurual network is as a model where we have a set of $p$ length input vectors $x_1,...,X_T$, a set of $q$ length hidden states $h_1,...,h_T$ and a set of output elements $y_1,...,y_T$\footnote{In this case we use scalar $y_i$s because we are interested in predicting individual words but there is no reason that why can't be generalized to higher dimensions}.  The model can then be written as
+One method that seems immediately appropriate for the task of text prediction is recurrent neural networks.  The general formulation of a recurrent neural network is as a model where we have a set of $p$ length input vectors $x_1,...,X_T$, a set of $q$ length hidden states $h_1,...,h_T$ and a set of output elements $y_1,...,y_T$\footnote{In this case we use scalar $y_i$s because we are interested in predicting individual words but there is no reason that why can't be generalized to higher dimensions}.  The model can then be written as
 
 \[t_i = W_{hx} x_i + W_{hh} h_{i-1} + b_h\]
 
