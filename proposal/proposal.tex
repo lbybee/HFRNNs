@@ -1,5 +1,8 @@
 \documentclass{article}
 
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
 \begin{document}
 
 \title{Stats 608 Research Project Proposal: Hessian-Free Optimization and Text Prediction with Recurrent Neural Networks}
@@ -10,28 +13,27 @@
 
 The problem of text prediction is a popular area of study within the machine learning community.  The canonical problem is one where a agent interesting in prediction observes a sequence of words and wants to predict the next word in the sequence.  More formally, this problem can be understood as a language modeling problem where we want to form some probability distribution for a word $w_t$ in period $t$ based on the observed corpus of words for the previous periods $W_{t-1}$.
 
-One method that seems immediately appropriate for the task of text prediction is recurrent neural networks.  The general formulation of a recurrent neural network is as a model where we have a set of $p$ length input vectors $x_1,...,X_T$, a set of $q$ length hidden states $h_1,...,h_T$ and a set of output elements $y_1,...,y_T$\footnote{In this case we use scalar $y_i$s because we are interested in predicting individual words but there is no reason that why can't be generalized to higher dimensions}.  The model can then be written as
+One method that seems immediately appropriate for the task of text prediction is recurrent neural networks (RNN).  The general formulation of a RNN is as an iterative model\footnote{Martens and Sutskever. 2011}. We are given a sequence of inputs $x_1,...,x_T \in \mathbb{R}^n$, a sequence of hidden states of our RNN $h_1,...,h_T \in \mathbb{R}^m$, and a set of output elements $y_1,...,y_T \in \mathbb{R}^k$.  With these sequences, the iterative model can be formulated as follows
 
-\[t_i = W_{hx} x_i + W_{hh} h_{i-1} + b_h\]
+$$t_i = W_{hx} x_i + W_{hh} h_{i-1} + b_h$$
+$$h_i = f(t_i)$$
+$$s_i = W_{yh} h_i + b_y$$
+$$y_i = g(s_i)$$
 
-\[h_i = f(t_i)\]
-
-\[s_i = W_{yh} h_i + b_y\]
-
-\[y_i = g(s_i)\]
+In this formulation, the matrix $W$ are weight matrices, and $b_h$, $b_y$ are the biases. The sequence of $s_1, \dots, s_T \in \mathbb{R}^k$ are output units calculated from the sequence of inputs to the hidden units, $t_1, \dots, t_T \in \mathbb{R}^k$.
 
 Ignoring any computation issues, this model formulation is extremely appealing for the text prediction task as it represents and extremely general formulation that captures the possible impact that prior word structure may have on the next word in a series.  Additionally, the hidden states allow us to capture complicated model dynamics that would be lost to simpler models.
 
-The primary issue with recurrent neural networks is large number of cases when standard 1st order gradient decent methods are used\footnote{Bengio et al. 1994.}\footnote{Hochreiter and Schmihuber. 1997.}.  This issue has been known for some time and has attracted several attempts to fix the underlying problem due to the usefulness of RNNs.  Hochreiter and Schmihuber, represent one of the primary attempts to remidy this issue by including information from data from earlier time periods.  Their methods, Long Short-Term Memory (LSTM), has had some success\footnote{Graves and Schmihuber. 2009; 2005.}\footnote{Mayer et al. 2007.}, however, it is not completely clear if LSTM accounts for all possible deficiencies with standard gradient decent and RNNs.
+The primary issue with RNNs is large number of cases when standard 1st order gradient decent methods are used\footnote{Bengio et al. 1994.}\footnote{Hochreiter and Schmihuber. 1997.}.  This issue has attracted several attempts to fix the underlying problem due to the usefulness of RNNs.  Hochreiter and Schmihuber, represent one of the primary attempts to remedy this issue by including information from data from earlier time periods.  Their methods, Long Short-Term Memory (LSTM), has had some success\footnote{Graves and Schmihuber. 2009; 2005.}\footnote{Mayer et al. 2007.}, however, it is not completely clear if LSTM accounts for all possible deficiencies with standard gradient decent and RNNs.
 
-A more recent method has been proposed by Martens and Sutskever\footnote{The Paper.} that uses Hessian-Free optimization to deal with the problems presented by first order gradient decent techniques for recurrent neural networks.  Martens and Sutskever find that their method performs well on a number of common cases where standard gradient decent methods fail for recurrent networks.  We attempt to extend their method to the case of text prediction here.
+A more recent method has been proposed by Martens and Sutskever\footnote{Martens and Sutskever. 2011.} that uses Hessian-Free optimization to deal with the problems presented by first order gradient decent techniques for RNNs. Martens and Sutskever find that their method performs well on a number of common cases where standard gradient decent methods fail for RNNs.  We attempt to extend their method to the case of text prediction here.
 
-To determine how viable Hessian-Free optimization is for the text prediction task we consider several alternative methods that could also be attempted.  The first is the standard stochastic gradient decent method that is often used for neural networks and to some extent recurrent neural networks.  In addition to this method we also implement a version of a LSTM RNN to determine how Hessian-Free optimization performs in the text prediction case when compared to LSTM.
+To determine how viable Hessian-Free optimization is for the text prediction task we consider several alternative methods that could also be attempted.  The first is the standard stochastic gradient decent method that is often used for neural networks and to some extent RNNs.  In addition to this method we also implement a version of a LSTM RNN to determine how Hessian-Free optimization performs in the text prediction case when compared to LSTM.
 
 We test our approach on a number of standard text corpuses used for text prediction.  These include the Penn Treebank\footnote{http://www.cis.upenn.edu/~treebank/}, 1996 English Broadcast News Speech\footnote{https://catalog.ldc.upenn.edu/LDC97S44} data set, and the Wikipedia data set.  These data sets have been used extensively in other natural language processing applications include text prediction and serve as a good standard to test our method against.
 
 When testing our method we are most interested in two factors.  How well does our method do at predicting the text word in sequence compared to the alternative methods?  How long does it take our method to reach a given level of accuracy when compared to the alternative methods?  We include results for both of these questions and use them to determine which methods perform best.
 
-To implement our approach we use the recently released TensorFlow library developed by Google\footnote{http://tensorflow.org/}.  We develop our code in Python and the resulting implemented is made public with a Github repository.  The use of TensorFlow allows us to avoid reinventing the proverbial wheel and focus more on the Hessian-Free aspect of the project instead of the neural network development.
+To implement our approach, we use the recently released TensorFlow library developed by Google\footnote{http://tensorflow.org/}.  We develop our code in Python and the resulting implemented is made public with a Github repository.  The use of TensorFlow allows us to avoid reinventing the proverbial wheel and focus more on the Hessian-Free aspect of the project instead of the neural network development.
 
 \end{document}
