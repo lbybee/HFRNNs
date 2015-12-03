@@ -7,9 +7,11 @@ from nltk.corpus import brown
 # news, editorial, reviews, religion, hobbies, lore, belles_lettres
 # government, learned, fiction, mystery, science_fiction, adventure, romance, humor
 def brown_corpus(category):
+	""" Imports Brown text data for the given category"""
 	return nltk.pos_tag([str(word) for word in brown.words(categories = category)])
 
 def brown_corpus_input():
+	""" Imports Brown text data by selecting categories from the commandline"""
 	print "Brown corpus include following categories"
 	print [str(category) for category in brown.categories()]
 	category_set = set([str(category) for category in brown.categories()])
