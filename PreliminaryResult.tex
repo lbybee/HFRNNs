@@ -1,0 +1,64 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{nips15submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+
+
+
+\title{Preliminary Result for Hessian-Free Optimization and Text Prediction with RNN}
+
+
+\author{
+Joseph Bybee\\
+University of Michigan\\
+\texttt{} \\
+\and
+Byoungwook Jang\\
+University of Michigan \\
+Address \\
+\texttt{bwjang@umich.edu} \\
+}
+
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The problem of text prediction is a popular area of study within the machine learning community. The problem involves training an agent that observes a sequence of words and predicts the next word in the sequence. More formally, this problem can be understood as a language modeling problem where we want to form some probability distribution for a word $w_t$ in period $t$ based on the observed corpus of words for the previous periods $w_{t-1}$. Our project implements recurrent neural networks (RNNs) to solve this text prediction problem and focuses on different optimization methods to train RNNs and their performances. These methods include hessian-free optimization with a damping scheme, stochastic gradient descent, and Long Short-Term Memory (LSTM). 
+\end{abstract}
+
+\section{Word Corpus Data}
+Natural Language Toolkit (NLTK) provides a variety of text data that can be used to test our RNNs. It provides lexical resources such as WordNet as well as text processing libraries for classification, tokenization, tagging, and parsing [1] that allows us to train and test RNNs at east. As our implementation is based on Python 2, NLTK Python library was used to import text data and corresponding tokens. For the preliminary results, the Brown Corpus was used for training and testing our RNNs. 
+
+The Brown Corpus was the first million-word electronic corpus of English and contains from 500 different sources, which are categorized by genre, including \textit{news, government, etc}. Once we receive feedbacks on our preliminary results, we plan to train our RNNs on different kinds of text and look into what kinds of sentences are generated based on the training corpus.
+
+\section{Hessian-Free Method}
+The implementation of RNNs using different optimization in this project is largely based on Marten's paper [2]. The Hessian-free optimization method used in this work was adopted from Marten's optimization for Deep learning [3]. The implementation of Hessian-free method was adopted from Boulanger-Lewandowski's software, which utilizes Theano library from Python to build a general purpose optimization for RNNs in Theano [4]. 
+
+Our preliminary results focus on understanding Theano library and adopt Boulanger's implementation to optimize RNNs for our problem of text prediction using the Hessian-free method. Once we validate this adoption of Theano library based Hessian optimization, the rest of the project will involve implementing stochastic gradient descent and LSTM to train RNNs and comparing the performances. Once the empirical comparisons are completed, more in depth analysis of Gauss-Newton matrix and its role in the Hessian-free method will be provided in our final report.
+
+\section{Preliminary result for Hessian-Free Method}
+
+
+\subsubsection*{References}
+
+
+\small{
+[1] S. Bird, E. Loper and E. Klein (2009), Natural Language Processing with Python. O?Reilly Media Inc.
+
+[2] J. Martens, and I. Sutskever (2011), Learning Recurrent Neural Networks with Hessian-Free Optimization. In Proceedings of the 28th International Conference on Machine Learning (ICML).
+
+[3] J. Martens (2010), Deep Learning via Hessian-free Optimization, In Proceedings of the 27th International Conference on Machine Learning (ICML).
+
+[4] N. Boulanger-Lewandowski, Y. Bengio and P. Vincent (2012), Modeling Temporal Dependencies in High-Dimensional Sequences: Application to Polyphonic Music Generation and Transcription, Proc. ICML 29
+}
+
+
+
+\end{document}
